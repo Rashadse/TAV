@@ -1,9 +1,9 @@
-package sample;
+package tests;
 
 import org.junit.jupiter.api.Test;
 
 
-class ControllerTest {
+class CalculatorTest {
     @Test
     void main() {
     }
