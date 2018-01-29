@@ -3,7 +3,7 @@ public interface CarInterface {
 
     boolean leftLaneDetect(int radarOne, int radarTwo, int radarThree, int lidar);
 
-    int cHangeLane();
+    int changeLane();
 
     CarPosition whereIs();
 }
