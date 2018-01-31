@@ -7,9 +7,16 @@ public class CarMovement implements CarInterface {
     // this boolean will be changed to false when the car reaches the end of the street
     boolean streetEndNotReached = true;
 
+    int distanceMoved = 0;
     @Override
     public void moveForward(int distance) {
 
+        if (distanceMoved < 95) {
+            distanceMoved += distance;
+        }
+        else {
+            streetEndNotReached = false;
+        }
     }
 
     @Override

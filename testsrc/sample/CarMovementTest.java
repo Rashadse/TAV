@@ -1,18 +1,31 @@
 package sample;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 
 class CarMovementTest {
+
+    private static CarMovement classUnderTest;
+
+    // this methods initialises the instance of the class to be tested
+    @BeforeAll
+    static void setUp() throws Exception {
+        classUnderTest = new CarMovement();
+    }
+
     @Test
-    void moveForward() throws Exception {
+    void moveForwardTest() throws Exception {
 
-    CarMovement c = new CarMovement();
-    boolean actual = c.streetEndNotReached;
+        classUnderTest.moveForward(classUnderTest.distance);
 
-    assertTrue(actual);
+    boolean actual = classUnderTest.streetEndNotReached;
+
+    assertTrue(actual, "boolean is not true");
+    assertEquals(5, classUnderTest.distanceMoved);
+
     }
 
     @Test
