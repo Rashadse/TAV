@@ -1,6 +1,12 @@
 package sample;
 
 public class CarMovement implements CarInterface {
+
+    // default final value of 5 to be used each time the car moves
+    final int distance = 5;
+    // this boolean will be changed to false when the car reaches the end of the street
+    boolean streetEndNotReached = true;
+
     @Override
     public void moveForward(int distance) {
 

@@ -3,12 +3,16 @@ package sample;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class CarMovementTest {
     @Test
     void moveForward() throws Exception {
+
     CarMovement c = new CarMovement();
-    assertNotNull(c);
+    boolean actual = c.streetEndNotReached;
+
+    assertTrue(actual);
     }
 
     @Test
