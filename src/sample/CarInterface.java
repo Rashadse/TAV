@@ -1,3 +1,5 @@
+package sample;
+
 public interface CarInterface {
     void moveForward(int distance);
 
