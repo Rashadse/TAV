@@ -27,8 +27,8 @@ public class CarMovement implements CarInterface {
     	
         /** 
          * These integer arrays hold the results from querying all sensors twice: 
-         * R1, R2, R3, L and R1, R2, R3, L. If either doesn't contain exactly 4 items,
-         * throw an error. Otherwise, check all the values in the arrays.
+         * R1, R2 and R3, L If either doesn't contain exactly 4 items, throw an
+         * error. Otherwise, check all the values in the arrays.
          */
     	
     	 // Control boolean where return value is stored.
@@ -37,7 +37,7 @@ public class CarMovement implements CarInterface {
     	int sensorCounter = 0;  
     	
     	if (!((sensorQuery_1.length == 4) && (sensorQuery_2.length == 4))) {
-    		
+    		// We're not interested in covering this exception for now.
     		throw new RuntimeException("Sensor readings incorrect.");
     		
     	} else {
@@ -49,7 +49,8 @@ public class CarMovement implements CarInterface {
 	    			if ((sensorQuery_1[i] <= 20) && (sensorQuery_2[i] <= 20)) {
 	    				// Lane is busy.
 	    				laneFree = false;
-	    				
+	    				// Exit loop at this point to avoid incrementing sensorCounter.
+	    				break;
 	    			} else {
 	    				// Lane free, keep track of how many sensors confirm this.
 	    				sensorCounter++;
@@ -57,7 +58,7 @@ public class CarMovement implements CarInterface {
 	    			
 	    		} else {
 	    			// One or more sensors work incorrectly in one or both queries.
-	    			throw new RuntimeException("Obstacles out of range.");
+	    			throw new RuntimeException("Obstacles out of range");
 	    		}	    		    		
 	    	};
     	}
