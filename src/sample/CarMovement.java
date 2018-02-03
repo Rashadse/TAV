@@ -19,9 +19,56 @@ public class CarMovement implements CarInterface {
         }
     }
 
+    /**
+     * @return true if the lane is free, false otherwise
+     */
     @Override
-    public boolean leftLaneDetect(int radarOne, int radarTwo, int radarThree, int lidar) {
-        return false;
+    public boolean leftLaneDetect(int[] sensorQuery_1, int[] sensorQuery_2) {
+    	
+        /** 
+         * These integer arrays hold the results from querying all sensors twice: 
+         * R1, R2, R3, L and R1, R2, R3, L. If either doesn't contain exactly 4 items,
+         * throw an error. Otherwise, check all the values in the arrays.
+         */
+    	
+    	 // Control boolean where return value is stored.
+    	boolean laneFree = false; 
+    	// Counter to track how many sensors detect a free lane in both queries.
+    	int sensorCounter = 0;  
+    	
+    	if (!((sensorQuery_1.length == 4) && (sensorQuery_2.length == 4))) {
+    		
+    		throw new RuntimeException("Sensor readings incorrect.");
+    		
+    	} else {
+    		// Loop through both arrays.
+	    	for (int i = 0; i < 4; i++) {
+	    		// Same sensor in both queries works properly.
+	    		if ((sensorQuery_1[i] <= 50) && (sensorQuery_2[i] <= 50)) {
+	    			// Same sensor detects an obstacle in both queries.
+	    			if ((sensorQuery_1[i] <= 20) && (sensorQuery_2[i] <= 20)) {
+	    				// Lane is busy.
+	    				laneFree = false;
+	    				
+	    			} else {
+	    				// Lane free, keep track of how many sensors confirm this.
+	    				sensorCounter++;
+	    			}
+	    			
+	    		} else {
+	    			// One or more sensors work incorrectly in one or both queries.
+	    			throw new RuntimeException("Obstacles out of range.");
+	    		}	    		    		
+	    	};
+    	}
+    	// Two or more sensors detect a free lane in both queries.
+    	if (sensorCounter >= 2) {
+    		// Lane is free.
+    		laneFree = true;
+    	}
+    	// Return the status of the lane.
+		return laneFree;
+    	
     }
 
     @Override
@@ -33,4 +80,5 @@ public class CarMovement implements CarInterface {
     public CarPosition whereIs() {
         return null;
     }
+
 }

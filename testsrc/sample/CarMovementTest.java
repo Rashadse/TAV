@@ -10,10 +10,10 @@ class CarMovementTest {
 
     private static CarMovement classUnderTest;
 
-    // this methods initialises the instance of the class to be tested
+    // this methods initializes the instance of the class to be tested
     @BeforeAll
     static void setUp() throws Exception {
-        classUnderTest = new CarMovement();
+        classUnderTest = new CarMovement();  // Arrange.
     }
 
     @Test
@@ -29,7 +29,14 @@ class CarMovementTest {
     }
 
     @Test
-    void leftLaneDetect() throws Exception {
+    void leftLaneDetectTest() throws Exception {
+    	
+    	int[] Q1 = {50,35,20,20};
+    	int[] Q2 = {30,35,20,20};
+    	
+    	boolean laneFree = classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
+    	
+    	assertEquals(true, laneFree);  // Assert.
     }
 
     @Test
