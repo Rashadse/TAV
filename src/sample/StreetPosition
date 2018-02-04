@@ -4,7 +4,7 @@ package sample;
 public class StreetPosition {
     public int latitude = 0;
     public int longitude = 0;
-    public String streetName = "Brunnehagen 51":
+    public String streetName = "tuve":
     
     public StreetPosition() {
     
