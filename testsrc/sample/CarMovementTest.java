@@ -16,6 +16,7 @@ class CarMovementTest {
         classUnderTest = new CarMovement();  // Arrange.
     }
 
+    // This method tests if the car stays parked if moveForward() is not invoked
     @Test
     void moveForwardTest() throws Exception {
 
@@ -28,6 +29,7 @@ class CarMovementTest {
 
     }
 
+    // This method checks if the car moves 5 meters when moveForward() is invoked once
     @Test
     void moveForwardTest2() throws Exception {
 
@@ -42,8 +44,10 @@ class CarMovementTest {
         assertEquals(5, classUnderTest.distanceMoved);
     }
 
+    // This method checks if the car moves 55 meters when moveForward() is invoked 11 times
     @Test
     void moveForwardTest3() throws Exception {
+
         //    move forward 55 meters
         for (int i = 0; i < 11; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
@@ -58,9 +62,10 @@ class CarMovementTest {
 
     }
 
+    // This method tests if the related boolean gets negated when the car reaches the end of the track
     @Test
     void moveForwardTest4() throws Exception {
-        // move forward 95 meters
+        // move forward 95 meters (end of track)
         for (int i = 0; i < 19; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
         }
@@ -70,10 +75,11 @@ class CarMovementTest {
         assertEquals(95, classUnderTest.distanceMoved);
 
         // check if the car has reached the end of the track
-        assertFalse(actual, "boolean is not false");
+        assertFalse(actual, "car has not reached the end of the track");
         //System.out.println(actual);
     }
 
+    // Checks if moveForward() throws and exception when called after the car reaches end of the track
     @Test
     void moveForwardTest5() throws Exception {
 
@@ -81,8 +87,6 @@ class CarMovementTest {
             // try to call moveForward when the end of the track has been reached
             for (int i = 0; i < 25; i++) {
                 classUnderTest.moveForward(classUnderTest.distance);
-                // check if the car has moved exactly 120 meters
-
             }
 
         } catch (RuntimeException e) {
@@ -234,38 +238,42 @@ class CarMovementTest {
         assertEquals(-1, returnCode);
     }
 
+    // Test to check the initial longitudinal position of the car
     @Test
     void whereIsTest1() throws Exception {
-        // Test to check the initial longitudinal position of the car 
-        
-        classUnderTest.moveForward(0); 
+
+
+        classUnderTest.moveForward(0);
         int actual_distanceMoved = 0;
 
         assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
     }
 
+    // Test to check the initial latitudinal position of the car
     @Test
     void whereIsTest2() throws Exception {
-       // Test to check the initial latitudinal position of the car
+
         int actual_lanePosition = 0;
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
     }
 
+    // Test to check the the longitudinal position of the car
     @Test
     void whereIsTest3() throws Exception {
-        // Test to check the the longitudinal position of the car 
-        
+
+
         classUnderTest.moveForward(90);
         int actual_distanceMoved = 90;
 
         assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
     }
 
+    // test to check the latitudinal position of the car after changeLane() has been invoked twice.
     @Test
     void whereIsTest4() throws Exception {
-        // test to check the latitudinal position of the car after changelane() has been invoked twice.
-       
+
+
         classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
         classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
 

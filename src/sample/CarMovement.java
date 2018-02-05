@@ -20,7 +20,7 @@ public class CarMovement implements CarInterface {
     @Override
     public void moveForward(int distance) {
 
-        if (distanceMoved + distance <= 100) {
+        if (distanceMoved + distance <= 95) {
             distanceMoved += distance;
         } else {
             throw new RuntimeException("the car has reached the end of the track");
