@@ -85,7 +85,7 @@ class CarMovementTest {
                 // check if the car has moved exactly 120 meters
 
             }
-            assertEquals(120, classUnderTest.distanceMoved);
+
         } catch (RuntimeException e) {
             assertEquals("the car has reached the end of the track", e.getMessage());
         }
