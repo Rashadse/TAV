@@ -1,6 +1,5 @@
 package sample;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +32,7 @@ class CarMovementTest {
     void moveForwardTest2() throws Exception {
 
         // move forward 5 meters
-         classUnderTest.moveForward(classUnderTest.distance);
+        classUnderTest.moveForward(classUnderTest.distance);
 
         boolean actual = classUnderTest.streetEndNotReached;
 
@@ -45,7 +44,7 @@ class CarMovementTest {
 
     @Test
     void moveForwardTest3() throws Exception {
-     //    move forward 55 meters
+        //    move forward 55 meters
         for (int i = 0; i < 11; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
         }
@@ -180,7 +179,7 @@ class CarMovementTest {
     }
 
     @Test
-    void changeLaneTest2(){
+    void changeLaneTest2() {
 
         int originalPosition = classUnderTest.distanceMoved;
         int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
@@ -242,6 +241,7 @@ class CarMovementTest {
 
         assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
     }
+
     @Test
     void whereIsTest2() throws Exception {
 
@@ -249,6 +249,7 @@ class CarMovementTest {
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
     }
+
     @Test
     void whereIsTest3() throws Exception {
         classUnderTest.moveForward(90);
@@ -256,6 +257,7 @@ class CarMovementTest {
 
         assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
     }
+
     @Test
     void whereIsTest4() throws Exception {
         classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);

@@ -5,15 +5,15 @@ public class CarMovement implements CarInterface {
     // default final value of 5 to be used each time the car moves
     final int distance = 5;
     // this boolean will be changed to false when the car reaches the end of the street
-     boolean streetEndNotReached = true;
+    boolean streetEndNotReached = true;
 
     int distanceMoved = 0;
 
-	// this variable shows where lane the car is in,
-	//and it is initialised to 0, as the car starts at the right most lane.
+    // this variable shows where lane the car is in,
+    //and it is initialised to 0, as the car starts at the right most lane.
     int lanePosition = 0;
 
-    public void moveForward(){
+    public void moveForward() {
         moveForward(5);
     }
 
@@ -23,10 +23,10 @@ public class CarMovement implements CarInterface {
         if (distanceMoved + distance <= 100) {
             distanceMoved += distance;
         } else {
-           throw new RuntimeException("the car has reached the end of the track");
+            throw new RuntimeException("the car has reached the end of the track");
         }
 
-        if(distanceMoved >= 95) {
+        if (distanceMoved >= 95) {
             streetEndNotReached = false;
         }
     }
@@ -87,14 +87,12 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
-        if(!this.streetEndNotReached)
-        {
+        if (!this.streetEndNotReached) {
             //at end of street, do nothing
             return -1;
         }
 
-        if(leftLaneDetect(sensorQuery_1, sensorQuery_2) && lanePosition < 3)
-        {
+        if (leftLaneDetect(sensorQuery_1, sensorQuery_2) && lanePosition < 3) {
             lanePosition++;
             moveForward();
             return 0;
@@ -107,9 +105,9 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int[] whereIs() {
-        int[] arr = {this.distanceMoved,this.lanePosition}; // distancemoved is the longitudinal position
-                                                            // lane position is the Latitudinal position
-        return arr;
+        // distanceMoved is the longitudinal position
+        // lanePosition is the Latitudinal position
+        return new int[]{this.distanceMoved, this.lanePosition};
 
     }
 
