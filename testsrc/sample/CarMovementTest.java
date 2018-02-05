@@ -75,8 +75,7 @@ class CarMovementTest {
 
     @Test
     void moveForwardTest5() throws Exception {
-        // move forward 35 meters
-            classUnderTest.moveForward(classUnderTest.distance);
+
         classUnderTest.moveForward(classUnderTest.distance);
 
         boolean actual = classUnderTest.streetEndNotReached;
@@ -167,9 +166,5 @@ class CarMovementTest {
     @Test
     void whereIs() throws Exception {
 
-        int[] actual = classUnderTest.whereIs();
-        classUnderTest.changeLane();
-
-        System.out.println(actual[1]);
     }
 }

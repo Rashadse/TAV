@@ -18,17 +18,13 @@ public class CarMovement implements CarInterface {
     public void moveForward(int distance) {
 
 
-        if (distanceMoved < 95) {
+        if (streetEndNotReached) {
 
             distanceMoved += distance;
-        }
-        if (distanceMoved == 95){
+        } else {
             streetEndNotReached = false;
         }
-        else if (distanceMoved > 95){
-            throw new RuntimeException("The car has reached the end of the street");
-
-        }
+ 
     }
 
 
@@ -88,14 +84,13 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane() {
-        lanePosition+=5;
-        System.out.println(lanePosition);
+
         return 0;
     }
 
     @Override
     public int[] whereIs() {
-    return null;
+        return null;
     }
 
 }
