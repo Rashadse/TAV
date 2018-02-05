@@ -12,7 +12,7 @@ public class CarMovement implements CarInterface {
 
     // this variable shows where lane the car is in,
     //and it is initialised to 0, as the car starts at the right most lane.
-    int lanePosition = 0;
+    public int lanePosition = 0;
 
     @Override
     public void moveForward(int distance) {
@@ -22,8 +22,12 @@ public class CarMovement implements CarInterface {
 
             distanceMoved += distance;
         }
-        if (distanceMoved >= 95){
+        if (distanceMoved == 95){
             streetEndNotReached = false;
+        }
+        else if (distanceMoved > 95){
+            throw new RuntimeException("The car has reached the end of the street");
+
         }
     }
 
@@ -84,7 +88,8 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane() {
-        lanePosition++;
+        lanePosition+=5;
+        System.out.println(lanePosition);
         return 0;
     }
 

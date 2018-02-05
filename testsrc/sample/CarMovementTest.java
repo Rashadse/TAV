@@ -17,13 +17,6 @@ class CarMovementTest {
     }
 
     @Test
-    void whereIs() throws Exception {
-
-        int[] actual = classUnderTest.whereIs();
-        System.out.println(actual[0]);
-    }
-
-    @Test
     void moveForwardTest() throws Exception {
 
         boolean actual = classUnderTest.streetEndNotReached;
@@ -71,6 +64,21 @@ class CarMovementTest {
         for (int i = 0; i < 7; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
         }
+        boolean actual = classUnderTest.streetEndNotReached;
+
+        // check if the car has moved exactly 35 meters
+        assertEquals(95, classUnderTest.distanceMoved);
+
+        // check if the car has reached the end of the track
+        assertFalse(actual, "boolean is not false");
+    }
+
+    @Test
+    void moveForwardTest5() throws Exception {
+        // move forward 35 meters
+            classUnderTest.moveForward(classUnderTest.distance);
+        classUnderTest.moveForward(classUnderTest.distance);
+
         boolean actual = classUnderTest.streetEndNotReached;
 
         // check if the car has moved exactly 35 meters
@@ -156,5 +164,12 @@ class CarMovementTest {
     void changeLane() throws Exception {
     }
 
+    @Test
+    void whereIs() throws Exception {
 
+        int[] actual = classUnderTest.whereIs();
+        classUnderTest.changeLane();
+
+        System.out.println(actual[1]);
+    }
 }
