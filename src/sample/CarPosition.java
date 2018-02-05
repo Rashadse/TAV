@@ -1,22 +1,13 @@
 package sample;
 
 public class CarPosition {
-    public int latitudinalPosition;
-    public int longitudinalPosition;
+
+    public int latitude;
+    public int longitude;
     
-    public CarPosition(int latitudinalPosition, int longitudinalPosition){
-        this.latitudinalPosition = latitudinalPosition;
-        this.longitudinalPosition= longitudinalPosition;
-    
+    public CarPosition(int latitude, int longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
-    
-    public int getlatitudinalPosition(){
-    return latitudinalPosition;
-    }
-    public int getlongitudinalPosition() {
-    return longitudinalPosition;
-    }
-    
-    
-    
+
 }

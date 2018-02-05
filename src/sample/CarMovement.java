@@ -7,12 +7,15 @@ public class CarMovement implements CarInterface {
     // this boolean will be changed to false when the car reaches the end of the street
     boolean streetEndNotReached = true;
 
-
     int distanceMoved = 0;
 
-    // this variable shows where lane the car is in,
-    //and it is initialised to 0, as the car starts at the right most lane.
-    public int lanePosition = 0;
+	// this variable shows where lane the car is in,
+	//and it is initialised to 0, as the car starts at the right most lane.
+    int lanePosition = 0;
+
+    public void moveForward(){
+        moveForward(5);
+    }
 
     @Override
     public void moveForward(int distance) {
@@ -87,15 +90,27 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public int changeLane() {
-        lanePosition+=5;
-        System.out.println(lanePosition);
-        return 0;
+    public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
+
+        if(leftLaneDetect(sensorQuery_1, sensorQuery_2))
+        {
+            lanePosition++;
+            moveForward();
+            return 0;
+        }
+
+        if(this.streetEndNotReached != false)
+        {
+            moveForward();
+            return -1;
+        }
+
+        return -1;
     }
 
     @Override
-    public int[] whereIs() {
-    return null;
+    public CarPosition whereIs() {
+        return new CarPosition(distanceMoved, lanePosition);
     }
 
 }
