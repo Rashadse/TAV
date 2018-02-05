@@ -7,8 +7,13 @@ public class CarMovement implements CarInterface {
     // this boolean will be changed to false when the car reaches the end of the street
      boolean streetEndNotReached = true;
 
-    // Should this be static?
-      int distanceMoved = 0;
+
+    int distanceMoved = 0;
+	
+	// this variable shows where lane the car is in,
+	//and it is initialised to 0, as the car starts at the right most lane.
+    static int lanePosition = 0; 
+
     @Override
     public  void moveForward(int distance) {
 
@@ -77,12 +82,19 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane() {
+	    lanePosition++;
         return 0;
     }
 
     @Override
-    public CarPosition whereIs() {
-        return null;
+    public int[] whereIs() {
+        int[] arr = new int[2];
+    //longitudinalPosition
+	arr[0]  = distanceMoved;
+	// latitudinalPosition
+	arr[1]  = lanePosition;
+	    return arr;
+	   
     }
 
 }
