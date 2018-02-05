@@ -159,8 +159,59 @@ class CarMovementTest {
         assertEquals(false, laneFree);  // Assert.
     }
 
+    int[] busyLaneQuery = {15, 15, 22, 22};
+    int[] emptyLaneQuery = {30, 30, 30, 30};
+
     @Test
-    void changeLane() throws Exception {
+    void changeLaneTest1() {
+
+        int originalPosition = classUnderTest.distanceMoved;
+        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        // We expect the car to move forward, turn left and return an success code
+        assertEquals(0, returnCode);
+        assertEquals(originalPosition + 5, classUnderTest.distanceMoved);
+        assertEquals(1, classUnderTest.lanePosition);
+
+    }
+
+    @Test
+    void changeLaneTest2(){
+
+        int originalPosition = classUnderTest.distanceMoved;
+        int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
+
+        // We expect the car to move forward and return an error code
+        assertEquals(-1, returnCode);
+        assertEquals(originalPosition + 5, classUnderTest.distanceMoved);
+
+    }
+
+    @Test
+    void changeLaneTest3() throws Exception {
+
+        classUnderTest.moveForward(100);
+        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        // We expect the car not to move at all and return an error code
+        assertEquals(-1, returnCode);
+        assertEquals(100, classUnderTest.distanceMoved);
+
+    }
+
+    @Test
+    void changeLaneTest4() throws Exception {
+
+    }
+
+    @Test
+    void changeLaneTest5() throws Exception {
+
+    }
+
+    @Test
+    void changeLaneTest6() throws Exception {
+
     }
 
     @Test
