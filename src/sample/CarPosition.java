@@ -4,7 +4,7 @@ public class CarPosition {
     public int latitudinalPosition;
     public int longitudinalPosition;
     
-    public class CarPosition(int latitudinalPosition, int longitudinalPosition){
+    public CarPosition(int latitudinalPosition, int longitudinalPosition){
         this.latitudinalPosition = latitudinalPosition;
         this.longitudinalPosition= longitudinalPosition;
     
