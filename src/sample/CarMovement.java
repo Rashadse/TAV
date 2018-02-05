@@ -94,12 +94,15 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public int[] whereIs() {
+    public int[] whereIs(int dm, int lp) {
+       this.distanceMoved = dm;
+        this.lanePosition = lp;
+        
         int[] arr = new int[2];
         //longitudinalPosition
-        arr[0] = distanceMoved;
+        arr[0] = dm;
         // latitudinalPosition
-        arr[1] = lanePosition;
+        arr[1] = lp;
         return arr;
 
     }
