@@ -19,12 +19,60 @@ class CarMovementTest {
     @Test
     void moveForwardTest() throws Exception {
 
+        boolean actual = classUnderTest.streetEndNotReached;
+
+    // check if the car has not reached the end of the track
+    assertTrue(actual, "boolean is not true");
+    // check if the car hasn't moved
+    assertEquals(0, classUnderTest.distanceMoved);
+
+    }
+
+    @Test
+    void moveForwardTest2() throws Exception {
+
+        // move forward 5 meters
         classUnderTest.moveForward(classUnderTest.distance);
 
-    boolean actual = classUnderTest.streetEndNotReached;
+        boolean actual = classUnderTest.streetEndNotReached;
 
-    assertTrue(actual, "boolean is not true");
-    assertEquals(5, classUnderTest.distanceMoved);
+        // check if the car has not reached the end of the track
+        assertTrue(actual, "boolean is not true");
+        // check if the car has moved exactly 5 meters
+        assertEquals(5, classUnderTest.distanceMoved);
+    }
+
+    @Test
+    void moveForwardTest3() throws Exception {
+        // move forward 55 meters
+        for (int i = 0; i < 11; i++) {
+            classUnderTest.moveForward(classUnderTest.distance);
+        }
+
+        boolean actual = classUnderTest.streetEndNotReached;
+
+        // check if the car has not reached the end of the track
+        assertTrue(actual, "boolean is not true");
+        // check if the car has moved exactly 55 meters
+        assertEquals(60, classUnderTest.distanceMoved);
+
+    }
+
+    @Test
+    void moveForwardTest4() throws Exception {
+        // move forward 40 meters
+        int counter1 = 0;
+        for (int i = 0; i < 8; i++) {
+            classUnderTest.moveForward(classUnderTest.distance);
+        counter1+=5;
+        }
+        System.out.println(counter1);
+        boolean actual = classUnderTest.streetEndNotReached;
+
+        // check if the car has reached the end of the track
+        assertFalse(actual, "boolean is not false");
+        // check if the car has moved exactly 35 meters
+        assertEquals(95, classUnderTest.distanceMoved);
 
     }
 
