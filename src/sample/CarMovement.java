@@ -5,7 +5,7 @@ public class CarMovement implements CarInterface {
     // default final value of 5 to be used each time the car moves
     final int distance = 5;
     // this boolean will be changed to false when the car reaches the end of the street
-    boolean streetEndNotReached = true;
+     boolean streetEndNotReached = true;
 
     int distanceMoved = 0;
 
@@ -19,15 +19,16 @@ public class CarMovement implements CarInterface {
 
     @Override
     public void moveForward(int distance) {
-        if (distanceMoved >= 95) {
+        if (distanceMoved > 90) {
             streetEndNotReached = false;
         }
-        if (streetEndNotReached) {
+        else if (streetEndNotReached) {
 
             distanceMoved += distance;
         } else{
             throw new RuntimeException("the car has reached the end of the track");
         }
+        System.out.println(streetEndNotReached);
     }
 
 
