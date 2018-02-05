@@ -8,6 +8,11 @@ public class CarMovement implements CarInterface {
     boolean streetEndNotReached = true;
 
     int distanceMoved = 0;
+	
+	// this variable shows where lane the car is in,
+	//and it is initialised to 0, as the car starts at the right most lane.
+    static int lanePosition = 0; 
+	
     @Override
     public void moveForward(int distance) {
 
@@ -74,12 +79,17 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane() {
+	    lanePosition++;
         return 0;
     }
 
     @Override
-    public CarPosition whereIs() {
-        return null;
+    public int[] whereIs() {
+        int[] arr = new int[2];
+	arr[0] longitudinalPosition = distanceMoved;
+	arr[1] latitudinalPosition = lanePosition;
+	    return arr;
+	   
     }
 
 }
