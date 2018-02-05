@@ -29,9 +29,6 @@ public class CarMovement implements CarInterface {
         if(distanceMoved >= 95) {
             streetEndNotReached = false;
         }
-
-        System.out.println(streetEndNotReached);
-
     }
 
 
