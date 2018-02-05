@@ -109,8 +109,11 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public CarPosition whereIs() {
-        return new CarPosition(distanceMoved, lanePosition);
+    public int[] whereIs() {
+        int[] arr = {this.distanceMoved,this.lanePosition};
+
+        return arr;
+
     }
 
 }
