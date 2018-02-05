@@ -1,6 +1,7 @@
 package sample;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,8 +12,8 @@ class CarMovementTest {
     private static CarMovement classUnderTest;
 
     // this methods initializes the instance of the class to be tested
-    @BeforeAll
-    static void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         classUnderTest = new CarMovement();  // Arrange.
     }
 
@@ -191,18 +192,28 @@ class CarMovementTest {
     @Test
     void changeLaneTest3() throws Exception {
 
-        classUnderTest.moveForward(100);
+        classUnderTest.moveForward(95);
         int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
 
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
-        assertEquals(100, classUnderTest.distanceMoved);
+
+        assertEquals(95, classUnderTest.distanceMoved);
+        assertEquals(0, classUnderTest.lanePosition);
 
     }
 
     @Test
     void changeLaneTest4() throws Exception {
 
+        classUnderTest.moveForward(95);
+        int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
+
+        // We expect the car not to move at all and return an error code
+        assertEquals(-1, returnCode);
+
+        assertEquals(95, classUnderTest.distanceMoved);
+        assertEquals(0, classUnderTest.lanePosition);
     }
 
     @Test
