@@ -110,8 +110,8 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int[] whereIs() {
-        int[] arr = {this.distanceMoved,this.lanePosition};
-
+        int[] arr = {this.distanceMoved,this.lanePosition}; // distancemoved is the longitudinal position
+                                                            // lane position is the Latitudinal position
         return arr;
 
     }
