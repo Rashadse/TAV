@@ -210,7 +210,8 @@ class CarMovementTest {
     @Test
     void changeLaneTest4() throws Exception {
         classUnderTest.moveForward(95);
-        int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
+        int returnCode;
+        returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
 
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
