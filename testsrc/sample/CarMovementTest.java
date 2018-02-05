@@ -236,7 +236,9 @@ class CarMovementTest {
 
     @Test
     void whereIsTest1() throws Exception {
-        classUnderTest.moveForward(0);
+        // Test to check the initial longitudinal position of the car 
+        
+        classUnderTest.moveForward(0); 
         int actual_distanceMoved = 0;
 
         assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
@@ -244,7 +246,7 @@ class CarMovementTest {
 
     @Test
     void whereIsTest2() throws Exception {
-
+       // Test to check the initial latitudinal position of the car
         int actual_lanePosition = 0;
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
@@ -252,6 +254,8 @@ class CarMovementTest {
 
     @Test
     void whereIsTest3() throws Exception {
+        // Test to check the the longitudinal position of the car 
+        
         classUnderTest.moveForward(90);
         int actual_distanceMoved = 90;
 
@@ -260,6 +264,8 @@ class CarMovementTest {
 
     @Test
     void whereIsTest4() throws Exception {
+        // test to check the latitudinal position of the car after changelane() has been invoked twice.
+       
         classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
         classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
 
