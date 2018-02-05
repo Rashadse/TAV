@@ -236,7 +236,34 @@ class CarMovementTest {
     }
 
     @Test
-    void whereIs() throws Exception {
+    void whereIsTest1() throws Exception {
+        classUnderTest.moveForward(0);
+        int actual_distanceMoved = 0;
 
+        assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
+    }
+    @Test
+    void whereIsTest2() throws Exception {
+
+        int actual_lanePosition = 0;
+
+        assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
+    }
+    @Test
+    void whereIsTest3() throws Exception {
+        classUnderTest.moveForward(90);
+        int actual_distanceMoved = 90;
+
+        assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
+    }
+    @Test
+    void whereIsTest4() throws Exception {
+        classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+        classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        int actual_lanePosition = 2;
+
+
+        assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
     }
 }
