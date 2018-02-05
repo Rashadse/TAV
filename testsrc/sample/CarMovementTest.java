@@ -76,17 +76,13 @@ class CarMovementTest {
 
     @Test
     void moveForwardTest5() throws Exception {
-        // move forward 35 meters
+
+        try {
+            // try to call moveForward when the end of the track has been reached
             classUnderTest.moveForward(classUnderTest.distance);
-        classUnderTest.moveForward(classUnderTest.distance);
-
-        boolean actual = classUnderTest.streetEndNotReached;
-
-        // check if the car has moved exactly 35 meters
-        assertEquals(95, classUnderTest.distanceMoved);
-
-        // check if the car has reached the end of the track
-        assertFalse(actual, "boolean is not false");
+        } catch (RuntimeException e) {
+            assertEquals("the car has reached the end of the track", e.getMessage());
+        }
     }
 
     @Test
@@ -229,9 +225,5 @@ class CarMovementTest {
     @Test
     void whereIs() throws Exception {
 
-        //int[] actual = classUnderTest.whereIs();
-        //classUnderTest.changeLane();
-
-        //System.out.println(actual[1]);
     }
 }
