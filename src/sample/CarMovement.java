@@ -19,16 +19,19 @@ public class CarMovement implements CarInterface {
 
     @Override
     public void moveForward(int distance) {
-        if (distanceMoved > 90) {
+
+        if (distanceMoved + distance <= 100) {
+            distanceMoved += distance;
+        } else {
+           throw new RuntimeException("the car has reached the end of the track");
+        }
+
+        if(distanceMoved >= 95) {
             streetEndNotReached = false;
         }
-        else if (streetEndNotReached) {
 
-            distanceMoved += distance;
-        } else{
-            throw new RuntimeException("the car has reached the end of the track");
-        }
         System.out.println(streetEndNotReached);
+
     }
 
 
@@ -74,7 +77,6 @@ public class CarMovement implements CarInterface {
                     throw new RuntimeException("Obstacles out of range");
                 }
             }
-            ;
         }
         // Two or more sensors detect a free lane in both queries.
         if (sensorCounter >= 2) {
@@ -88,19 +90,20 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
+        if(!this.streetEndNotReached)
+        {
+            //at end of street, do nothing
+            return -1;
+        }
 
-        if(leftLaneDetect(sensorQuery_1, sensorQuery_2))
+        if(leftLaneDetect(sensorQuery_1, sensorQuery_2) && lanePosition < 3)
         {
             lanePosition++;
             moveForward();
             return 0;
         }
 
-        if(this.streetEndNotReached != false)
-        {
-            moveForward();
-            return -1;
-        }
+        moveForward();
 
         return -1;
     }

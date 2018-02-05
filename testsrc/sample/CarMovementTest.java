@@ -62,7 +62,7 @@ class CarMovementTest {
     @Test
     void moveForwardTest4() throws Exception {
         // move forward 95 meters
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 19; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
         }
         boolean actual = classUnderTest.streetEndNotReached;
@@ -193,7 +193,6 @@ class CarMovementTest {
 
     @Test
     void changeLaneTest3() throws Exception {
-
         classUnderTest.moveForward(95);
         int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
 
@@ -207,7 +206,6 @@ class CarMovementTest {
 
     @Test
     void changeLaneTest4() throws Exception {
-
         classUnderTest.moveForward(95);
         int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
 
@@ -220,12 +218,21 @@ class CarMovementTest {
 
     @Test
     void changeLaneTest5() throws Exception {
+        classUnderTest.lanePosition = 3;
 
+        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        assertEquals(-1, returnCode);
     }
 
     @Test
     void changeLaneTest6() throws Exception {
+        classUnderTest.lanePosition = 3;
+        classUnderTest.moveForward(95);
 
+        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        assertEquals(-1, returnCode);
     }
 
     @Test
