@@ -19,15 +19,15 @@ public class CarMovement implements CarInterface {
 
     @Override
     public void moveForward(int distance) {
-
-
+        if (distanceMoved >= 95) {
+            streetEndNotReached = false;
+        }
         if (streetEndNotReached) {
 
             distanceMoved += distance;
-        } else {
-            streetEndNotReached = false;
+        } else{
+            throw new RuntimeException("the car has reached the end of the track");
         }
-        // add exceptions
     }
 
 
