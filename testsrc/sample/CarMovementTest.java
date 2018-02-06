@@ -16,37 +16,10 @@ class CarMovementTest {
         classUnderTest = new CarMovement();  // Arrange.
     }
 
-    // This method tests if the car stays parked if moveForward() is not invoked
-    @Test
-    void moveForwardTest() throws Exception {
-
-        boolean actual = classUnderTest.streetEndNotReached;
-
-        // check if the car has not reached the end of the track
-        assertTrue(actual, "boolean is not true");
-        // check if the car hasn't moved
-        assertEquals(0, classUnderTest.distanceMoved);
-
-    }
-
-    // This method checks if the car moves 5 meters when moveForward() is invoked once
-    @Test
-    void moveForwardTest2() throws Exception {
-
-        // move forward 5 meters
-        classUnderTest.moveForward(classUnderTest.distance);
-
-        boolean actual = classUnderTest.streetEndNotReached;
-
-        // check if the car has not reached the end of the track
-        assertTrue(actual, "boolean is not true");
-        // check if the car has moved exactly 5 meters
-        assertEquals(5, classUnderTest.distanceMoved);
-    }
 
     // This method checks if the car moves 55 meters when moveForward() is invoked 11 times
     @Test
-    void moveForwardTest3() throws Exception {
+    void moveForwardTest1() throws Exception {
 
         //    move forward 55 meters
         for (int i = 0; i < 11; i++) {
@@ -64,7 +37,7 @@ class CarMovementTest {
 
     // This method tests if the related boolean gets negated when the car reaches the end of the track
     @Test
-    void moveForwardTest4() throws Exception {
+    void moveForwardTest2() throws Exception {
         // move forward 95 meters (end of track)
         for (int i = 0; i < 19; i++) {
             classUnderTest.moveForward(classUnderTest.distance);
@@ -81,7 +54,7 @@ class CarMovementTest {
 
     // Checks if moveForward() throws and exception when called after the car reaches end of the track
     @Test
-    void moveForwardTest5() throws Exception {
+    void moveForwardTest3() throws Exception {
 
         try {
             // try to call moveForward when the end of the track has been reached
@@ -92,6 +65,19 @@ class CarMovementTest {
         } catch (RuntimeException e) {
             assertEquals("the car has reached the end of the track", e.getMessage());
         }
+    }
+
+    // This method tests if the car stays parked if moveForward() is not invoked
+    @Test
+    void moveForwardTest4() throws Exception {
+
+        boolean actual = classUnderTest.streetEndNotReached;
+
+        // check if the car has not reached the end of the track
+        assertTrue(actual, "boolean is not true");
+        // check if the car hasn't moved
+        assertEquals(0, classUnderTest.distanceMoved);
+
     }
 
     @Test
