@@ -59,11 +59,14 @@ public class CarMovement implements CarInterface {
                 // Same sensor in both queries works properly.
                 if ((sensorQuery_1[i] <= 50) && (sensorQuery_2[i] <= 50)) {
                     // Same sensor detects an obstacle in both queries.
-                    if ((sensorQuery_1[i] <= 20) && (sensorQuery_2[i] <= 20)) {
-                        // Lane is busy.
-                        laneFree = false;
-                        // Exit loop at this point to avoid incrementing sensorCounter.
-                        break;
+                    if (((sensorQuery_1[1] < 10) && (sensorQuery_2[1] < 10))
+                    		|| ((sensorQuery_1[2] < 10) && (sensorQuery_2[2] < 10))) {
+                    	// Check if the sensor detecting is either R2, or R3.
+	                    // Lane is busy.
+	                    laneFree = false;
+	                    // Exit loop at this point to avoid incrementing sensorCounter.
+	                    break;
+	                    
                     } else {
                         // Lane free, keep track of how many sensors confirm this.
                         sensorCounter++;
