@@ -166,7 +166,7 @@ class CarMovementTest {
         assertEquals(false, laneFree);  // Assert.
     }
 
-    int[] busyLaneQuery = {15, 15, 22, 22};
+    int[] busyLaneQuery = {15, 5, 5, 22};
     int[] emptyLaneQuery = {30, 30, 30, 30};
 
     @Test
