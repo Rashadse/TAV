@@ -111,8 +111,8 @@ class CarMovementTest {
     @Test
     void leftLaneDetectTest2() throws Exception {
         //Test case 3.
-        int[] Q1 = {25, 55, 25, 55};
-        int[] Q2 = {20, 51, 51, 51};
+        int[] Q1 = {45, 55, 55, 60};
+        int[] Q2 = {47, 51, 51, 60};
         // Check the exception type, out of range expected.
         try {
             classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
@@ -125,8 +125,8 @@ class CarMovementTest {
     @Test
     void leftLaneDetectTest3() throws Exception {
         // Test case 5.
-        int[] Q1 = {30, 30, 30, 30};
-        int[] Q2 = {35, 35, 35, 35};
+        int[] Q1 = {45, 10, 10, 30};
+        int[] Q2 = {45, 10, 10, 31};
 
         boolean laneFree = classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
         // We expect the lane to be free.
@@ -136,8 +136,8 @@ class CarMovementTest {
     @Test
     void leftLaneDetectTest4() throws Exception {
         //Test case 6.
-        int[] Q1 = {22, 20, 25, 22};
-        int[] Q2 = {25, 25, 25, 25};
+        int[] Q1 = {22, 24, 25, 45};
+        int[] Q2 = {25, 25, 25, 45};
 
         boolean laneFree = classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
         // We expect the lane to be free.
@@ -147,8 +147,8 @@ class CarMovementTest {
     @Test
     void leftLaneDetectTest5() throws Exception {
         // Test case 7.
-        int[] Q1 = {25, 10, 25, 25};
-        int[] Q2 = {25, 15, 25, 25};
+        int[] Q1 = {25, 10, 9, 25};
+        int[] Q2 = {25, 11, 9, 25};
 
         boolean laneFree = classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
         // We expect the lane to be busy.
@@ -158,8 +158,8 @@ class CarMovementTest {
     @Test
     void leftLaneDetectTest6() throws Exception {
         //Test case 8.
-        int[] Q1 = {15, 15, 22, 22};
-        int[] Q2 = {15, 10, 22, 22};
+        int[] Q1 = {15, 5, 5, 22};
+        int[] Q2 = {15, 5, 6, 22};
 
         boolean laneFree = classUnderTest.leftLaneDetect(Q1, Q2);  // Act.
         // We expect the lane to be busy.
