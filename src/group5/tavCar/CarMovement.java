@@ -9,6 +9,20 @@ public class CarMovement implements CarInterface {
 
     int distanceMoved = 0;
 
+    private IRadarSensors radarSensors;
+    private ILidarSensor lidarSensor;
+    private IActuator actuator;
+
+    public CarMovement(IRadarSensors radarSensors,
+                       ILidarSensor lidarSensor,
+                       IActuator actuator)
+    {
+        this.radarSensors = radarSensors;
+        this.lidarSensor = lidarSensor;
+
+        this.actuator = actuator;
+    }
+
     // this variable shows where lane the car is in,
     //and it is initialised to 0, as the car starts at the right most lane.
     int lanePosition = 0;
@@ -22,8 +36,9 @@ public class CarMovement implements CarInterface {
 
         if (distanceMoved + distance <= 95) {
             distanceMoved += distance;
+            actuator.moveForward(distance);
         } else {
-            throw new RuntimeException("the car has reached the end of the track");
+            throw new RuntimeException("The car has reached the end of the track.");
         }
 
         if (distanceMoved >= 95) {
@@ -91,18 +106,19 @@ public class CarMovement implements CarInterface {
     @Override
     public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
         if (!this.streetEndNotReached) {
-            //at end of street, do nothing
+            //The car is at end of street so do nothing
             return -1;
         }
 
         if (leftLaneDetect(sensorQuery_1, sensorQuery_2) && lanePosition < 3) {
             lanePosition++;
+            actuator.setWheelAngle(-1);
             moveForward();
+            actuator.setWheelAngle(0);
             return 0;
         }
 
         moveForward();
-
         return -1;
     }
 
