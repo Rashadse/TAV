@@ -16,12 +16,15 @@ import org.mockito.internal.verification.Times;
 
 public class CarMovementTest {
 
-    private static CarMovement classUnderTest;
-  
+    @Mock IActuator actuator;
+    @Mock ILidarSensor lidarSensor;
+    @Mock IRadarSensors radarSensors;
+
+    @InjectMocks CarMovement classUnderTest;  // Arrange.
+
     @BeforeEach
     public void setUp() throws Exception {
     	MockitoAnnotations.initMocks(this);
-    	classUnderTest = new CarMovement();  // Arrange.
     }
     
     @Test
@@ -46,7 +49,7 @@ public class CarMovementTest {
 
 
     // This method checks if the car moves 55 meters when moveForward() is invoked 11 times
-  /*  @Test
+    @Test
     void moveForwardTest1() throws Exception {
 
         //    move forward 55 meters
@@ -84,15 +87,12 @@ public class CarMovementTest {
     @Test
     void moveForwardTest3() throws Exception {
 
-        try {
-            // try to call moveForward when the end of the track has been reached
-            for (int i = 0; i < 25; i++) {
-                classUnderTest.moveForward(classUnderTest.distance);
-            }
-
-        } catch (RuntimeException e) {
-            assertEquals("the car has reached the end of the track", e.getMessage());
+        // try to call moveForward when the end of the track has been reached
+        for (int i = 0; i < 19; i++) {
+            classUnderTest.moveForward(classUnderTest.distance);
         }
+
+        assertThrows(EndOfTrackReachedException.class, () -> classUnderTest.moveForward(classUnderTest.distance));
     }
 
     // This method tests if the car stays parked if moveForward() is not invoked
@@ -223,15 +223,19 @@ public class CarMovementTest {
 
     @Test
     void changeLaneTest4() throws Exception {
-        classUnderTest.moveForward(95);
+        //classUnderTest.moveForward(95);
+
+        when(actuator.getDistance()).thenReturn(100);
+
+
         int returnCode;
-        returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
+        returnCode = classUnderTest.changeLane();
 
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
-
-        assertEquals(95, classUnderTest.distanceMoved);
-        assertEquals(0, classUnderTest.lanePosition);
+//
+//        assertEquals(95, car.distanceMoved);
+//        assertEquals(0, car.lanePosition);
     }
 
     @Test
@@ -296,5 +300,5 @@ public class CarMovementTest {
 
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
-    }*/
+    }
 }

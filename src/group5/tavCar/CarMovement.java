@@ -32,13 +32,13 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public void moveForward(int distance) {
+    public void moveForward(int distance) throws EndOfTrackReachedException {
 
         if (distanceMoved + distance <= 95) {
             distanceMoved += distance;
             actuator.moveForward(distance);
         } else {
-            throw new RuntimeException("The car has reached the end of the track.");
+            throw new EndOfTrackReachedException("The car has reached the end of the track.");
         }
 
         if (distanceMoved >= 95) {
@@ -104,6 +104,11 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
+    public int changeLane(){
+        return changeLane(new int[]{10,10,10,10}, new int[]{10,10,10,10});
+    }
+
+
     public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
         if (!this.streetEndNotReached) {
             //The car is at end of street so do nothing
