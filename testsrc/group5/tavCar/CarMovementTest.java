@@ -33,7 +33,7 @@ public class CarMovementTest {
 
         //    move forward 55 meters
         for (int i = 0; i < 11; i++) {
-            classUnderTest.moveForward(classUnderTest.distance);
+            classUnderTest.moveForward(5);
         }
 
         boolean actual = classUnderTest.streetEndNotReached;
@@ -50,7 +50,7 @@ public class CarMovementTest {
     void moveForwardTest2() throws Exception {
         // move forward 95 meters (end of track)
         for (int i = 0; i < 19; i++) {
-            classUnderTest.moveForward(classUnderTest.distance);
+            classUnderTest.moveForward(5);
         }
         boolean actual = classUnderTest.streetEndNotReached;
 
@@ -68,10 +68,10 @@ public class CarMovementTest {
 
         // try to call moveForward when the end of the track has been reached
         for (int i = 0; i < 19; i++) {
-            classUnderTest.moveForward(classUnderTest.distance);
+            classUnderTest.moveForward(5);
         }
 
-        assertThrows(EndOfTrackReachedException.class, () -> classUnderTest.moveForward(classUnderTest.distance));
+        assertThrows(EndOfTrackReachedException.class, () -> classUnderTest.moveForward(5));
     }
 
     // This method tests if the car stays parked if moveForward() is not invoked
