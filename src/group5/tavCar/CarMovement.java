@@ -51,7 +51,20 @@ public class CarMovement implements CarInterface {
      * @return true if the lane is free, false otherwise
      */
     @Override
-    public boolean leftLaneDetect(int[] sensorQuery_1, int[] sensorQuery_2) {
+    public boolean leftLaneDetect() {
+
+        /**
+         *  Hacky way to adapt the existing algorithm to the new way of reading sensors
+         */
+
+        int[] sensorQuery_1 = new int[4];
+        int[] sensorQuery_2 = new int[4];
+
+        System.arraycopy(radarSensors.Read(), 0, sensorQuery_1, 0, 3);
+        sensorQuery_1[3] = lidarSensor.Read();
+
+        System.arraycopy(radarSensors.Read(), 0, sensorQuery_2, 0, 3);
+        sensorQuery_2[3] = lidarSensor.Read();
 
         /**
          * These integer arrays hold the results from querying all sensors twice: 
@@ -104,18 +117,13 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public int changeLane(){
-        return changeLane(new int[]{10,10,10,10}, new int[]{10,10,10,10});
-    }
-
-
-    public int changeLane(int[] sensorQuery_1, int[] sensorQuery_2) {
+    public int changeLane() {
         if (!this.streetEndNotReached) {
             //The car is at end of street so do nothing
             return -1;
         }
 
-        if (leftLaneDetect(sensorQuery_1, sensorQuery_2) && lanePosition < 3) {
+        if (leftLaneDetect() && lanePosition < 3) {
             lanePosition++;
             actuator.setWheelAngle(-1);
             moveForward();
