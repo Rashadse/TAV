@@ -26,16 +26,15 @@ public class CarMovementTest {
     public void setUp() throws Exception {
     	MockitoAnnotations.initMocks(this);
     }
-    
     @Test
     public void leftLaneDetectTest0() throws Exception {
         // Test case 5.
         int[] Q1 = {45, 10, 10, 30};
         int[] Q2 = {45, 10, 10, 31};
-        
+
         CarMovement testClass = mock(CarMovement.class);  // Mock.
         when(testClass.leftLaneDetect(Q1, Q2)).thenReturn(true);  // Stub.
-       
+
         boolean laneFree = testClass.leftLaneDetect(Q1, Q2);  // Act.
         verify(testClass, times(1)).leftLaneDetect(Q1, Q2);  //  Verify.
         // We expect the lane to be free.
@@ -183,35 +182,49 @@ public class CarMovementTest {
     int[] busyLaneQuery = {15, 5, 5, 22};
     int[] emptyLaneQuery = {30, 30, 30, 30};
 
+    private int[] busyLaneRadarQuery  = {15,  5,  5};
+    private int[] emptyLaneRadarQuery = {30, 30, 30};
+
+    private int busyLaneLidarQuery  = 22;
+    private int emptyLaneLidarQuery = 30;
+
     @Test
     void changeLaneTest1() {
 
         int originalPosition = classUnderTest.distanceMoved;
-        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+
+        when(radarSensors.Read()).thenReturn(emptyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(emptyLaneLidarQuery);
+
+        int returnCode = classUnderTest.changeLane();
 
         // We expect the car to move forward, turn left and return an success code
         assertEquals(0, returnCode);
-        assertEquals(originalPosition + 5, classUnderTest.distanceMoved);
-        assertEquals(1, classUnderTest.lanePosition);
+        assertEquals(originalPosition + 5, classUnderTest.whereIs()[0]);
+        assertEquals(1, classUnderTest.whereIs()[1]);
 
     }
 
     @Test
     void changeLaneTest2() {
 
-        int originalPosition = classUnderTest.distanceMoved;
-        int returnCode = classUnderTest.changeLane(busyLaneQuery, busyLaneQuery);
+        int originalPosition = classUnderTest.whereIs()[0];
+
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
+
+        int returnCode = classUnderTest.changeLane();
 
         // We expect the car to move forward and return an error code
         assertEquals(-1, returnCode);
-        assertEquals(originalPosition + 5, classUnderTest.distanceMoved);
+        assertEquals(originalPosition + 5, classUnderTest.whereIs()[0]);
 
     }
 
     @Test
     void changeLaneTest3() throws Exception {
         classUnderTest.moveForward(95);
-        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+        int returnCode = classUnderTest.changeLane();
 
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
@@ -225,24 +238,28 @@ public class CarMovementTest {
     void changeLaneTest4() throws Exception {
         //classUnderTest.moveForward(95);
 
-        when(actuator.getDistance()).thenReturn(100);
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
 
+        when(actuator.getDistance()).thenReturn(95);
 
         int returnCode;
         returnCode = classUnderTest.changeLane();
 
-        // We expect the car not to move at all and return an error code
-        assertEquals(-1, returnCode);
-//
 //        assertEquals(95, car.distanceMoved);
 //        assertEquals(0, car.lanePosition);
+        // We expect the car not to move at all and return an error code
+        assertEquals(-1, returnCode);
     }
 
     @Test
     void changeLaneTest5() throws Exception {
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
+
         classUnderTest.lanePosition = 3;
 
-        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+        int returnCode = classUnderTest.changeLane();
 
         assertEquals(-1, returnCode);
     }
@@ -252,7 +269,7 @@ public class CarMovementTest {
         classUnderTest.lanePosition = 3;
         classUnderTest.moveForward(95);
 
-        int returnCode = classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+        int returnCode = classUnderTest.changeLane();
 
         assertEquals(-1, returnCode);
     }
@@ -293,8 +310,9 @@ public class CarMovementTest {
     void whereIsTest4() throws Exception {
 
 
-        classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
-        classUnderTest.changeLane(emptyLaneQuery, emptyLaneQuery);
+        //emptyLaneQuery, emptyLaneQuery
+        classUnderTest.changeLane();
+        classUnderTest.changeLane();
 
         int actual_lanePosition = 2;
 
