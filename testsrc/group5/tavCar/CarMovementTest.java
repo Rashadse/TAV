@@ -1,25 +1,54 @@
 package group5.tavCar;
 
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 
-class CarMovementTest {
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.internal.verification.Times;
+
+public class CarMovementTest {
 
     private static CarMovement classUnderTest;
+  
+    @Before
+    public void setUp() throws Exception {
+    	MockitoAnnotations.initMocks(this);
+    	classUnderTest = new CarMovement();  // Arrange.
+    }
+    
+    @Test
+    public void leftLaneDetectTest0() throws Exception {
+        // Test case 5.
+        int[] Q1 = {45, 10, 10, 30};
+        int[] Q2 = {45, 10, 10, 31};
+        
+        CarMovement testClass = mock(CarMovement.class);  // Mock.
+        when(testClass.leftLaneDetect(Q1, Q2)).thenReturn(true);  // Stub.
+       
+        boolean laneFree = testClass.leftLaneDetect(Q1, Q2);  // Act.
+        verify(testClass, times(1)).leftLaneDetect(Q1, Q2);  //  Verify.
+        // We expect the lane to be free.
+        assertEquals(true, laneFree);  // Assert.
+    }
 
-    // this methods initializes the instance of the class to be tested
-    @BeforeEach
+    /*@BeforeEach
     void setUp() throws Exception {
         classUnderTest = new CarMovement();  // Arrange.
-    }
+    }*/
 
 
     // This method checks if the car moves 55 meters when moveForward() is invoked 11 times
-    @Test
+  /*  @Test
     void moveForwardTest1() throws Exception {
 
         //    move forward 55 meters
@@ -269,5 +298,5 @@ class CarMovementTest {
 
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
-    }
+    }*/
 }
