@@ -6,6 +6,10 @@ public class Actuator implements IActuator {
 
     }
 
+    public void moveForward(){
+
+    }
+
     @Override
     public void setWheelAngle(int angle) {
 
