@@ -1,9 +1,7 @@
 package group5.tavCar;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +18,7 @@ public class CarMovementTest {
 
     private static CarMovement classUnderTest;
   
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
     	MockitoAnnotations.initMocks(this);
     	classUnderTest = new CarMovement();  // Arrange.
