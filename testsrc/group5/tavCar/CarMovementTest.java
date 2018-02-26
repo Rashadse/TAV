@@ -4,19 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import static org.mockito.Mockito.*;
+import org.mockito.*;
 
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.internal.verification.Times;
-
+@SuppressWarnings("Duplicates")
 public class CarMovementTest {
 
-    @Mock IActuator actuator;
+    @Spy IActuator actuator;
     @Mock ILidarSensor lidarSensor;
     @Mock IRadarSensors radarSensors;
 
@@ -162,8 +156,6 @@ public class CarMovementTest {
     int[] busyLaneQuery = {15, 5, 5, 22};
     int[] emptyLaneQuery = {30, 30, 30, 30};
 
-
-  /*
     private int[] busyLaneRadarQuery  = {15,  5,  5};
     private int[] emptyLaneRadarQuery = {30, 30, 30};
 
@@ -182,15 +174,15 @@ public class CarMovementTest {
 
         // We expect the car to move forward, turn left and return an success code
         assertEquals(0, returnCode);
-        assertEquals(originalPosition + 5, classUnderTest.whereIs()[0]);
-        assertEquals(1, classUnderTest.whereIs()[1]);
+        assertEquals(originalPosition + 5, classUnderTest.whereIs().distance);
+        assertEquals(1, classUnderTest.whereIs().lanePosition);
 
     }
 
     @Test
     void changeLaneTest2() {
 
-        int originalPosition = classUnderTest.whereIs()[0];
+        int originalPosition = classUnderTest.whereIs().distance;
 
         when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
         when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
@@ -199,7 +191,7 @@ public class CarMovementTest {
 
         // We expect the car to move forward and return an error code
         assertEquals(-1, returnCode);
-        assertEquals(originalPosition + 5, classUnderTest.whereIs()[0]);
+        assertEquals(originalPosition + 5, classUnderTest.whereIs().distance);
 
     }
 
@@ -264,7 +256,7 @@ public class CarMovementTest {
         classUnderTest.moveForward(0);
         int actual_distanceMoved = 0;
 
-        assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
+        assertEquals(actual_distanceMoved, classUnderTest.whereIs().distance);
     }
 
     // Test to check the initial latitudinal position of the car
@@ -273,7 +265,7 @@ public class CarMovementTest {
 
         int actual_lanePosition = 0;
 
-        assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
+        assertEquals(actual_lanePosition, classUnderTest.whereIs().lanePosition);
     }
 
     // Test to check the the longitudinal position of the car
@@ -284,7 +276,7 @@ public class CarMovementTest {
         classUnderTest.moveForward(90);
         int actual_distanceMoved = 90;
 
-        assertEquals(actual_distanceMoved, classUnderTest.whereIs()[0]);
+        assertEquals(actual_distanceMoved, classUnderTest.whereIs().distance);
     }
 
     // test to check the latitudinal position of the car after changeLane() has been invoked twice.
@@ -299,6 +291,6 @@ public class CarMovementTest {
         int actual_lanePosition = 2;
 
 
-        assertEquals(actual_lanePosition, classUnderTest.whereIs()[1]);
-    }*/
+        assertEquals(actual_lanePosition, classUnderTest.whereIs().lanePosition);
+    }
 }

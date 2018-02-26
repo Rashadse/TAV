@@ -136,11 +136,16 @@ public class CarMovement implements CarInterface {
     }
 
     @Override
-    public int[] whereIs() {
+    public CarPosition whereIs() {
         // distanceMoved is the longitudinal position
         // lanePosition is the Latitudinal position
-        return new int[]{this.distanceMoved, this.lanePosition};
 
+        CarPosition p = new CarPosition();
+
+        p.distance = this.distanceMoved;
+        p.lanePosition = this.lanePosition;
+
+        return p;
     }
 
 }

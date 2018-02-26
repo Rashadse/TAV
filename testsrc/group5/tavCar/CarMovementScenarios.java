@@ -1,25 +1,38 @@
 package group5.tavCar;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
+import org.junit.jupiter.api.*;
 import org.mockito.*;
 
-public class CarMovementScenarios {
+import static org.mockito.Mockito.*;
 
+public class CarMovementScenarios {
 
     @Spy  IActuator actuator;
     @Mock IRadarSensors radarSensors;
     @Mock ILidarSensor lidarSensor;
 
-    @BeforeAll
-    void setUp(){
+    @InjectMocks CarMovement car;
+
+    @BeforeEach
+    public void setUp(){
         MockitoAnnotations.initMocks(this);
     }
+
+    private int[] busyLaneRadarQuery  = {15,  5,  5};
+    private int[] emptyLaneRadarQuery = {30, 30, 30};
+
+    private int busyLaneLidarQuery  = 22;
+    private int emptyLaneLidarQuery = 30;
 
     @Test
     void scenario1()
     {
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
+
+        car.moveForward();
+
+        verify(actuator, atLeastOnce()).moveForward();
 
     }
 

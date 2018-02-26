@@ -8,6 +8,6 @@ public interface CarInterface {
 
     int changeLane();
 
-    int[] whereIs();
+    CarPosition whereIs();
    
 }
