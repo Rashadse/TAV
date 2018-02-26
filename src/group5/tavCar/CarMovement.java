@@ -1,9 +1,7 @@
 package group5.tavCar;
 
 public class CarMovement implements CarInterface {
-
-    // default final value of 5 to be used each time the car moves
-    final int distance = 5;
+    
     // this boolean will be changed to false when the car reaches the end of the street
     boolean streetEndNotReached = true;
 
@@ -34,9 +32,9 @@ public class CarMovement implements CarInterface {
     @Override
     public void moveForward(int distance) throws EndOfTrackReachedException {
 
-        if (distanceMoved + distance <= 95) {
-            distanceMoved += distance;
-            actuator.moveForward(distance);
+        if (distanceMoved + 5 <= 95) {
+            distanceMoved += 5;
+            actuator.moveForward(5);
         } else {
             throw new EndOfTrackReachedException("The car has reached the end of the track.");
         }
