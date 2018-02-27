@@ -22,6 +22,7 @@ public class CarMovementScenarios {
     private int[] busyLaneRadarQuery   = {15,  5,  5};
     private int[] busyLaneRadarQuery1   = {-1,  -1,  -1};
     private int[] emptyLaneRadarQuery  = {30, 30, 30};
+    private int[] busyLaneOneLaneOverRadarQuery = {45, 11, 11};
     private int[] outOfRangeRadarQuery = {30, 30, 30};
 
     private int busyLaneLidarQuery   = 22;
@@ -111,6 +112,41 @@ public class CarMovementScenarios {
     void scenario4()
     {
 
+    }
+    
+    @Test
+    void scenario5() {
+    	
+        // Starts at the beginning of the street.
+        // Moves 15 meters without changing lanes.
+        for(int i = 0; i < 2; i++ ) {
+            car.moveForward();
+        }
+        // Verify we actually call the actuator.
+        verify(actuator, atLeastOnce()).moveForward();
+
+        // Assert distance traveled.
+        assertEquals(10, car.whereIs().distance);
+        
+        // Radar sensors pick up a car one lane over.
+        when(radarSensors.Read()).thenReturn(busyLaneOneLaneOverRadarQuery);
+        // Lidar sensor doesn't pick up anything.
+        when(lidarSensor.Read()).thenReturn(outOfRangeLidarQuery);
+
+        // Act.
+        car.changeLane();
+
+        // Verify we're calling the mock.
+        verify(actuator, atLeastOnce()).moveForward();
+
+        // We assert the car's in the middle lane.
+        assertEquals(1, car.whereIs().lanePosition);
+
+        // Move forward until end of road.
+        for(int i = 0; i < 16; i++){
+            car.moveForward();
+        }
+    	
     }
 
 
