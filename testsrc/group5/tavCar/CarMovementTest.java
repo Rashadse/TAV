@@ -10,7 +10,7 @@ import org.mockito.*;
 @SuppressWarnings("Duplicates")
 public class CarMovementTest {
 
-    @Spy IActuator actuator;
+    @Spy IActuator actuator = new Actuator();
     @Mock ILidarSensor lidarSensor;
     @Mock IRadarSensors radarSensors;
 
@@ -30,12 +30,8 @@ public class CarMovementTest {
             classUnderTest.moveForward(5);
         }
 
-        boolean actual = classUnderTest.streetEndNotReached;
-
-        // check if the car has not reached the end of the track
-        assertTrue(actual, "boolean is not true");
         // check if the car has moved exactly 55 meters
-        assertEquals(55, classUnderTest.distanceMoved);
+        assertEquals(55, classUnderTest.whereIs().distance);
 
     }
 
@@ -46,14 +42,9 @@ public class CarMovementTest {
         for (int i = 0; i < 19; i++) {
             classUnderTest.moveForward(5);
         }
-        boolean actual = classUnderTest.streetEndNotReached;
-
         // check if the car has moved exactly 95 meters
-        assertEquals(95, classUnderTest.distanceMoved);
+        assertEquals(95, classUnderTest.whereIs().distance);
 
-        // check if the car has reached the end of the track
-        assertFalse(actual, "car has not reached the end of the track");
-        //System.out.println(actual);
     }
 
     // Checks if moveForward() throws and exception when called after the car reaches end of the track
@@ -72,12 +63,8 @@ public class CarMovementTest {
     @Test
     void moveForwardTest4() throws Exception {
 
-        boolean actual = classUnderTest.streetEndNotReached;
-
-        // check if the car has not reached the end of the track
-        assertTrue(actual, "boolean is not true");
         // check if the car hasn't moved
-        assertEquals(0, classUnderTest.distanceMoved);
+        assertEquals(0, classUnderTest.whereIs().distance);
 
     }
 
@@ -165,7 +152,7 @@ public class CarMovementTest {
     @Test
     void changeLaneTest1() {
 
-        int originalPosition = classUnderTest.distanceMoved;
+        int originalPosition = classUnderTest.whereIs().distance;
 
         when(radarSensors.Read()).thenReturn(emptyLaneRadarQuery);
         when(lidarSensor.Read()).thenReturn(emptyLaneLidarQuery);
@@ -203,8 +190,8 @@ public class CarMovementTest {
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
 
-        assertEquals(95, classUnderTest.distanceMoved);
-        assertEquals(0, classUnderTest.lanePosition);
+        assertEquals(95, classUnderTest.whereIs().distance);
+        assertEquals(0, classUnderTest.whereIs().lanePosition);
 
     }
 
@@ -221,7 +208,7 @@ public class CarMovementTest {
         returnCode = classUnderTest.changeLane();
 
 //        assertEquals(95, car.distanceMoved);
-//        assertEquals(0, car.lanePosition);
+//        assertEquals(0, car.whereIs().lanePosition);
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
     }
@@ -231,7 +218,7 @@ public class CarMovementTest {
         when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
         when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
 
-        classUnderTest.lanePosition = 3;
+        classUnderTest.whereIs().lanePosition = 3;
 
         int returnCode = classUnderTest.changeLane();
 
@@ -240,7 +227,7 @@ public class CarMovementTest {
 
     @Test
     void changeLaneTest6() throws Exception {
-        classUnderTest.lanePosition = 3;
+        classUnderTest.whereIs().lanePosition = 3;
         classUnderTest.moveForward(95);
 
         int returnCode = classUnderTest.changeLane();
@@ -263,9 +250,9 @@ public class CarMovementTest {
     @Test
     void whereIsTest2() throws Exception {
 
-        int actual_lanePosition = 0;
+        int actual = 0;
 
-        assertEquals(actual_lanePosition, classUnderTest.whereIs().lanePosition);
+        assertEquals(actual, classUnderTest.whereIs().lanePosition);
     }
 
     // Test to check the the longitudinal position of the car
@@ -285,11 +272,13 @@ public class CarMovementTest {
 
 
         //emptyLaneQuery, emptyLaneQuery
+        when(radarSensors.Read()).thenReturn(emptyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(emptyLaneLidarQuery);
+
         classUnderTest.changeLane();
         classUnderTest.changeLane();
 
         int actual_lanePosition = 2;
-
 
         assertEquals(actual_lanePosition, classUnderTest.whereIs().lanePosition);
     }

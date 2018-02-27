@@ -1,15 +1,13 @@
 package group5.tavCar;
 
 public class CarMovement implements CarInterface {
-    
-    // this boolean will be changed to false when the car reaches the end of the street
-    boolean streetEndNotReached = true;
-
-    int distanceMoved = 0;
 
     private IRadarSensors radarSensors;
     private ILidarSensor lidarSensor;
     private IActuator actuator;
+
+    public int distance;
+    public int lanePosition;
 
     public CarMovement(IRadarSensors radarSensors,
                        ILidarSensor lidarSensor,
@@ -21,27 +19,14 @@ public class CarMovement implements CarInterface {
         this.actuator = actuator;
     }
 
-    // this variable shows where lane the car is in,
-    //and it is initialised to 0, as the car starts at the right most lane.
-    int lanePosition = 0;
-
     public void moveForward() {
-        moveForward(5);
+        actuator.moveForward();
+        updatePosition();
     }
 
     @Override
     public void moveForward(int distance) throws EndOfTrackReachedException {
-
-        if (distanceMoved + 5 <= 95) {
-            distanceMoved += 5;
-            actuator.moveForward(5);
-        } else {
-            throw new EndOfTrackReachedException("The car has reached the end of the track.");
-        }
-
-        if (distanceMoved >= 95) {
-            streetEndNotReached = false;
-        }
+        actuator.moveForward(distance);
     }
 
 
@@ -116,13 +101,12 @@ public class CarMovement implements CarInterface {
 
     @Override
     public int changeLane() {
-        if (!this.streetEndNotReached) {
+        if (whereIs().distance >= 95) {
             //The car is at end of street so do nothing
             return -1;
         }
 
-        if (leftLaneDetect() && lanePosition < 3) {
-            lanePosition++;
+        if (leftLaneDetect() && whereIs().lanePosition < 3) {
             actuator.setWheelAngle(-1);
             moveForward();
             actuator.setWheelAngle(0);
@@ -130,20 +114,29 @@ public class CarMovement implements CarInterface {
         }
 
         moveForward();
+        updatePosition();
         return -1;
     }
 
     @Override
     public CarPosition whereIs() {
+
         // distanceMoved is the longitudinal position
         // lanePosition is the Latitudinal position
 
         CarPosition p = new CarPosition();
 
-        p.distance = this.distanceMoved;
-        p.lanePosition = this.lanePosition;
+        p.distance = actuator.getDistance();
+        p.lanePosition = actuator.getLanePosition();
 
         return p;
+    }
+
+    private void updatePosition(){
+        CarPosition p = whereIs();
+
+        this.distance = p.distance;
+        this.lanePosition = p.lanePosition;
     }
 
 }
