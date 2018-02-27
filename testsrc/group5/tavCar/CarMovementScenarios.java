@@ -20,6 +20,7 @@ public class CarMovementScenarios {
     }
 
     private int[] busyLaneRadarQuery   = {15,  5,  5};
+    private int[] busyLaneRadarQuery1   = {-1,  -1,  -1};
     private int[] emptyLaneRadarQuery  = {30, 30, 30};
     private int[] outOfRangeRadarQuery = {30, 30, 30};
 
@@ -53,7 +54,7 @@ public class CarMovementScenarios {
 
         assertEquals(0, car.whereIs().lanePosition);
 
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 9; i++){
             car.moveForward();
         }
 
@@ -63,11 +64,46 @@ public class CarMovementScenarios {
     void scenario2()
     {
 
+        for(int i = 0; i < 5; i++ ) {
+            car.moveForward();
+        }
+
+        verify(actuator, atLeastOnce()).moveForward();
+
+        assertEquals(25, car.whereIs().distance);
+
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery);
+        when(lidarSensor.Read()).thenReturn(busyLaneLidarQuery);
+
+        car.changeLane();
+
+        verify(actuator, atLeastOnce()).moveForward();
+
+        assertEquals(0, car.whereIs().lanePosition);
+
+        for(int i = 0; i < 13; i++){
+            car.moveForward();
+        }
+
     }
 
     @Test
     void scenario3()
     {
+
+        assertEquals(0, car.whereIs().distance);
+
+        when(radarSensors.Read()).thenReturn(busyLaneRadarQuery1);
+
+        car.changeLane();
+
+        verify(actuator, atLeastOnce()).moveForward();
+
+        assertEquals(0, car.whereIs().lanePosition);
+
+        for(int i = 0; i < 18; i++){
+            car.moveForward();
+        }
 
     }
 
