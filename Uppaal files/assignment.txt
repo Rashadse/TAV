@@ -1,0 +1,39 @@
+Phase 3: Model Checking and GUI Testing
+
+Objectives
+This phase of the project is designed to apply formal (mathematical) modelling and verification techniques as well as Visual GUI Testing  to a small case study:
+apply mathematical modelling to capture the core behavior of a concurrency scenario in accessing a shared resource (a street lane),
+apply simulation to gain insight on some of its basic behavior,
+specify some of its correctness properties in a temporal logic,
+apply model checking to verify the properties of the modelled behavior, and
+apply Visual GUI testing to a graphical user interface developed for the product of phase 2.
+The last step is only necessary to obtain a VG. 
+
+General Description
+We separate two activities in this phase; the second activity is optional, but it is necessary to get a VG:
+Model Checking: In the first activity, we assume that there are  two cars on the street, on the rightmost- and the middle-lane. They move forward along the street (possibly with different speeds). The rightmost car’s sensor will query parallel automata to check the position of the car on the middle lane. (We assume that all sensors are collectively modeled by a single timed Automata.) The car will move to the middle lane if both sensor queries indicate that there is no adjacent car on the middle lane. 
+ The only way for the parallel automata to communicate is through shared channels; no other globally shared variables are allowed. 
+For this phase, you need to phrase at least three requirements in TCTL on the safety and functionality of the modeled lane change behavior. All properties need to be verified and shown to hold on your model. 
+For VG, you need to model failing sensors and make sure that the properties additionally hold in the presence of sensor failures. Note that all sensors (Radar and LIDAR) are modeled by one automata that return their collective sensing values. Sensor failures are modeled by returning obviously out of range values. 
+To keep the verification task simple you can abstract the values into a few equivalence classes (e.g., car present, car absent, out of range).  
+
+
+Visual GUI Testing: In the second activity (only necessary to obtain VG), you specify a few scenarios for testing a minimal GUI that you developed for  your application from phase 2. Note that unlike the previous step, we assume that there are only 2 lanes in the street and one car in each lane.  The GUI should allow for defining the speed of the car initially, show their positions (either as a number or graphically) and allow for issuing the command to change lane (for the car on the rightmost lane). Then, perform Visual GUI testing using either EyeAutomate or  Sikuli (or any comparable tool) in order to test the main functionality of the system in terms of a few scenarios.
+
+
+Deliverables
+There are three main deliverables for this phase:
+a single pdf file documenting the outcome of each and every of the following activities,
+a .zip file containing the source code of the models (e.g., automata and queries) and the software implemented in different parts, and
+a self evaluation of your own effort and the effort by each and every member.
+The first two deliverables are sent as a group using GUL. The last deliverable is sent by email by each member individually to both supervisors.
+Model Checking
+Specify the network of timed automata representing the two cars, their sensor, and the street. Specify 3 possible scenarios of interaction in the system (in plain English or using a sequence diagram) and simulate them in UPPAAL. Subsequently, formulate 3 correctness criteria for your design and model-check them in UPPAAL. While model-checking, if you notice mistakes in your initial model, please mention them and the process of correcting your model.
+Visual GUI Testing
+Design at least 5 scenarios of interaction (e.g., trying to park in an occupied position, moving forward through the whole street and going back to an available parking lot and parking) and code them as scripts in EyeAutomate or Sikuli. Run the tests and make sure that all of them run successfully. Perform debugging if necessary.
+
+Assessment Criteria
+For a pass, you need to have designed a network of timed Automata modeling the bahavior of the two cars and their sensors, simulated their behavior for at least 3 scenarios of behaviors in your model and verified 3 properties. All of these steps should be properly documented in the report, by including screenshots of model, simulation (e.g., sequence diagrams), and verification and sufficient English explanation. 
+
+For a VG, you need to have modeled the possibility of sensors failures, have simulated an additional scenario involving failure and verified all properties in the presence of failures. Additionally, you need to have tested a GUI of phase 2 product using EyeAutomata (or Sikuli). All of these steps should be properly documented in the report by including screenshots from the tools and sufficient accompanying English explanation. 
+
