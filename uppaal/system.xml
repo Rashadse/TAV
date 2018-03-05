@@ -2,15 +2,60 @@
 
 chan freeLane, busyLane, outOfRange;
 
-int streetLength = 10;
-chan query;
+const int streetLength = 10;
+typedef int[0, streetLength] distance_t;
+chan query[distance_t];
+chan streetQuery[distance_t];
+chan streetResponse[distance_t];
+
+const int carCount = 2;
+typedef int[0, carCount] id_t;
+
 int obstacleDistance;
-int carDistance;</declaration><template><name x="5" y="5">Car</name><declaration>// Place local declarations here.
-int distance;
+int carDistance;
+
+chan lane1Move[distance_t];
+chan lane2Move[distance_t];
+</declaration><template><name x="5" y="5">Car</name><parameter>const int id, distance_t distance</parameter><declaration>// Place local declarations here.
 int lane;
-clock x;</declaration><location id="id0" x="40" y="-144"></location><location id="id1" x="24" y="-256"></location><location id="id2" x="-144" y="-144"></location><location id="id3" x="-288" y="-144"><name x="-362" y="-174">moveForward</name></location><location id="id4" x="-504" y="-144"></location><init ref="id4"/><transition><source ref="id2"/><target ref="id0"/><label kind="synchronisation" x="-88" y="-168">busyLane?</label><nail x="8" y="-144"/></transition><transition><source ref="id2"/><target ref="id1"/><label kind="synchronisation" x="-72" y="-240">freeLane?</label><nail x="-64" y="-256"/></transition><transition><source ref="id2"/><target ref="id4"/><nail x="-408" y="-16"/></transition><transition><source ref="id3"/><target ref="id2"/><label kind="synchronisation" x="-248" y="-144">query!</label></transition><transition><source ref="id4"/><target ref="id3"/><label kind="guard" x="-456" y="-174">x == 5</label><label kind="assignment" x="-456" y="-144">x = 0</label></transition></template><template><name>ObstacleCar</name><declaration>clock time;
-int speed = 5;</declaration><location id="id5" x="248" y="0"><committed/></location><location id="id6" x="0" y="0"></location><init ref="id6"/><transition><source ref="id5"/><target ref="id6"/><label kind="assignment" x="152" y="-104">time = 0</label><nail x="128" y="-96"/></transition><transition><source ref="id6"/><target ref="id5"/><label kind="guard" x="168" y="72">time == speed</label><label kind="assignment" x="152" y="88">obstacleDistance++</label><nail x="128" y="104"/></transition></template><template><name>RadarSensor</name><location id="id7" x="-376" y="16"></location><location id="id8" x="-136" y="16"></location><init ref="id7"/><transition><source ref="id8"/><target ref="id8"/><label kind="guard" x="-24" y="-32">obstacleDistance != carDistance</label><label kind="synchronisation" x="-24" y="-16">freeLane!</label><nail x="-32" y="-32"/><nail x="-32" y="48"/></transition><transition><source ref="id8"/><target ref="id8"/><label kind="guard" x="-40" y="72">obstacleDistance == -1</label><label kind="synchronisation" x="-56" y="88">outOfRange!</label><nail x="-40" y="64"/><nail x="-88" y="120"/></transition><transition><source ref="id8"/><target ref="id8"/><label kind="guard" x="-320" y="-120">obstacleDistance == carDistance</label><label kind="synchronisation" x="-208" y="-104">busyLane!</label><nail x="-88" y="-112"/><nail x="-32" y="-56"/></transition><transition><source ref="id7"/><target ref="id8"/><label kind="synchronisation" x="-264" y="16">query?</label></transition></template><template><name>LidarSensor</name><location id="id9" x="0" y="0"></location><init ref="id9"/></template><template><name>Street</name><parameter>const int lanes, const int length, const int cars</parameter><location id="id10" x="0" y="0"></location><init ref="id10"/></template><system>// Place template instantiations here.
-obstacle = ObstacleCar();
+clock x;</declaration><location id="id0" x="224" y="-256"></location><location id="id1" x="40" y="-144"></location><location id="id2" x="24" y="-256"><committed/></location><location id="id3" x="-144" y="-144"></location><location id="id4" x="-288" y="-144"><name x="-362" y="-174">moveForward</name></location><location id="id5" x="-488" y="-144"></location><init ref="id5"/><transition><source ref="id2"/><target ref="id0"/><label kind="synchronisation" x="56" y="-280">lane1Move[distance]!</label><label kind="assignment" x="64" y="-256">distance++</label></transition><transition><source ref="id3"/><target ref="id1"/><label kind="synchronisation" x="-88" y="-168">busyLane?</label><nail x="8" y="-144"/></transition><transition><source ref="id3"/><target ref="id2"/><label kind="synchronisation" x="-72" y="-240">freeLane?</label><nail x="-64" y="-256"/></transition><transition><source ref="id3"/><target ref="id5"/><nail x="-144" y="-80"/><nail x="-440" y="-80"/></transition><transition><source ref="id4"/><target ref="id3"/><label kind="synchronisation" x="-272" y="-136">query[distance]!</label></transition><transition><source ref="id5"/><target ref="id4"/><label kind="assignment" x="-432" y="-144">x = 0</label></transition></template><template><name>ObstacleCar</name><parameter>const int id</parameter><declaration>clock time;
+int speed = 5;</declaration><location id="id6" x="248" y="0"><committed/></location><location id="id7" x="0" y="0"></location><init ref="id7"/><transition><source ref="id6"/><target ref="id7"/><label kind="assignment" x="152" y="-104">time = 0</label><nail x="128" y="-96"/></transition><transition><source ref="id7"/><target ref="id6"/><label kind="guard" x="168" y="72">time == speed</label><label kind="synchronisation" x="176" y="56">lane2Move[id]!</label><label kind="assignment" x="152" y="88">obstacleDistance++</label><nail x="128" y="104"/></transition></template><template><name>RadarSensor</name><declaration>distance_t distance;
+id_t position_id;</declaration><location id="id8" x="-224" y="8"><committed/></location><location id="id9" x="-432" y="8"><committed/></location><location id="id10" x="-624" y="8"></location><location id="id11" x="-40" y="8"></location><init ref="id10"/><transition><source ref="id8"/><target ref="id11"/><label kind="select" x="-192" y="-38">i : id_t</label><label kind="synchronisation" x="-192" y="-8">streetResponse[i]?</label><label kind="assignment" x="-192" y="7">position_id = i</label></transition><transition><source ref="id9"/><target ref="id8"/><label kind="select" x="-408" y="-16">i : id_t</label><label kind="synchronisation" x="-416" y="8">streetQuery[distance]!</label></transition><transition><source ref="id11"/><target ref="id11"/><label kind="guard" x="72" y="-40">position_id == 0</label><label kind="synchronisation" x="72" y="-24">freeLane!</label><nail x="64" y="-40"/><nail x="64" y="40"/></transition><transition><source ref="id11"/><target ref="id11"/><label kind="guard" x="-144" y="-128">position_id != 0</label><label kind="synchronisation" x="-112" y="-112">busyLane!</label><nail x="8" y="-120"/><nail x="64" y="-64"/></transition><transition><source ref="id10"/><target ref="id9"/><label kind="select" x="-592" y="-16">i:int[0,streetLength]</label><label kind="synchronisation" x="-528" y="8">query[i]?</label><label kind="assignment" x="-544" y="24">distance = i</label></transition></template><template><name>Street</name><parameter>distance_t car1distance, distance_t car2distance</parameter><declaration>int lane1[distance_t];
+int lane2[distance_t];
+
+distance_t distance;
+
+
+
+id_t check(distance_t distance){
+	return lane2[distance];
+}
+
+void move_forward(int lane, distance_t d){
+	if(lane == 1)
+	{
+		lane1[d+1] = lane1[d];
+		lane1[d]   = 0;
+	}
+	else{
+		lane2[d+1] = lane2[d];
+		lane2[d]   = 0;
+	}
+}
+
+void change_lane(distance_t d){
+	lane2[d] = lane1[d];
+	lane1[d]   = 0;
+}
+
+void initialize()
+{
+	lane1[car1distance] = 1;
+	lane2[car2distance] = 2;
+}</declaration><location id="id12" x="-624" y="8"><committed/></location><location id="id13" x="-248" y="8"><committed/></location><location id="id14" x="-440" y="8"></location><init ref="id12"/><transition><source ref="id12"/><target ref="id14"/><label kind="assignment" x="-592" y="8">initialize()</label></transition><transition><source ref="id14"/><target ref="id14"/><label kind="select" x="-536" y="104">d : distance_t</label><label kind="synchronisation" x="-536" y="136">lane1Move[d]?</label><label kind="assignment" x="-552" y="160">move_forward(1, d)</label><nail x="-424" y="96"/><nail x="-536" y="96"/></transition><transition><source ref="id13"/><target ref="id14"/><label kind="synchronisation" x="-464" y="-88">streetResponse[check(distance)]!</label><nail x="-352" y="-72"/></transition><transition><source ref="id14"/><target ref="id13"/><label kind="select" x="-416" y="8">d : distance_t</label><label kind="synchronisation" x="-416" y="24">streetQuery[d]?</label></transition></template><system>// Place template instantiations here.
+obstacle = ObstacleCar(2);
+car = Car(1, 2);
+street = Street(2, 5);
 
 // List one or more processes to be composed into a system.
-system obstacle, RadarSensor, Car;</system></nta>
+system obstacle, RadarSensor, car, street;</system></nta>
