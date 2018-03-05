@@ -6,7 +6,7 @@ public class CarMovement implements CarInterface {
     private ILidarSensor lidarSensor;
     private IActuator actuator;
 
-    public int distance;
+    public int distanceMoved;
     public int lanePosition;
 
     public CarMovement(IRadarSensors radarSensors,
@@ -135,7 +135,7 @@ public class CarMovement implements CarInterface {
     private void updatePosition(){
         CarPosition p = whereIs();
 
-        this.distance = p.distance;
+        this.distanceMoved = p.distance;
         this.lanePosition = p.lanePosition;
     }
 

@@ -207,8 +207,6 @@ public class CarMovementTest {
         int returnCode;
         returnCode = classUnderTest.changeLane();
 
-//        assertEquals(95, car.distanceMoved);
-//        assertEquals(0, car.whereIs().lanePosition);
         // We expect the car not to move at all and return an error code
         assertEquals(-1, returnCode);
     }

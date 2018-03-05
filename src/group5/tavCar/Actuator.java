@@ -2,18 +2,18 @@ package group5.tavCar;
 
 public class Actuator implements IActuator{
     private int lanePosition;
-    private int distance;
+    private int distanceMoved;
     private int wheelAngle;
 
     public Actuator(){
-        distance = 0;
+        distanceMoved = 0;
         wheelAngle = 0;
         lanePosition = 0;
     }
 
     @Override
     public void moveForward(int distance) {
-        if(this.distance >= 95)
+        if(this.distanceMoved >= 95)
         {
             throw new EndOfTrackReachedException("Uh oh");
         }
@@ -23,7 +23,7 @@ public class Actuator implements IActuator{
             lanePosition++;
         }
 
-        this.distance += distance;
+        this.distanceMoved += distance;
     }
 
     public void moveForward(){
@@ -37,7 +37,7 @@ public class Actuator implements IActuator{
 
     @Override
     public int getDistance() {
-        return distance;
+        return distanceMoved;
     }
 
     @Override
